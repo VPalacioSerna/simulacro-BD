@@ -1,0 +1,83 @@
+CREATE TABLE IF NOT EXISTS cargos (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(45)
+);
+
+CREATE TABLE IF NOT EXISTS editoriales (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(45)
+);
+
+CREATE TABLE IF NOT EXISTS categorias (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(45)
+);
+
+CREATE TABLE IF NOT EXISTS autores (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(45)
+);
+
+CREATE TABLE IF NOT EXISTS clientes (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(45),
+	telefono VARCHAR(45),
+	correo VARCHAR(125) UNIQUE
+);               
+
+
+CREATE TABLE IF NOT EXISTS empleados (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(45),
+	id_cargo INT,
+	FOREIGN KEY (id_cargo) REFERENCES cargos(id)  ON UPDATE CASCADE ON DELETE CASCADE
+);   
+
+
+CREATE TABLE IF NOT EXISTS libros (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	titulo VARCHAR(100),
+	anio_publicacion INT,
+	precio INT,
+	id_autor INT,
+	id_categoria INT,
+	id_editorial INT,
+	FOREIGN KEY (id_autor) REFERENCES autores(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (id_categoria) REFERENCES categorias(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (id_editorial) REFERENCES editoriales(id) ON UPDATE CASCADE ON DELETE CASCADE
+);  
+
+
+CREATE TABLE IF NOT EXISTS prestamos (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	fecha_prestamo VARCHAR(20),
+	fecha_devolucion VARCHAR(20),
+	id_cliente INT,
+	id_empleado INT,
+	id_libro INT,
+	FOREIGN KEY (id_cliente) REFERENCES clientes(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (id_empleado) REFERENCES empleados(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (id_libro) REFERENCES libros(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+DROP TABLE cargos;
+DROP TABLE editoriales;
+DROP TABLE categorias;
+DROP TABLE autores;
+DROP TABLE clientes;
+DROP TABLE empleados;
+DROP TABLE libros;
+DROP TABLE prestamos;
+
+
+TRUNCATE TABLE cargos ;
+TRUNCATE TABLE editoriales ;
+TRUNCATE TABLE categorias ;
+TRUNCATE TABLE autores ;
+TRUNCATE TABLE clientes ;
+TRUNCATE TABLE empleados ;
+TRUNCATE TABLE libros ;
+TRUNCATE TABLE prestamos ;
+
+
